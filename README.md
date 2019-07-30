@@ -1,0 +1,1 @@
+## A simple inventory management system developed using Laravel Framework.
