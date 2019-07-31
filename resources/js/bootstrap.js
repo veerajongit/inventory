@@ -11,7 +11,32 @@ try {
     require('bootstrap');
 } catch (e) { }
 
-window.token = document.head.querySelector('meta[name="csrf-token"]').content;
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+// Import datatable
+require('datatables.net-bs4');
+
+
+window.renderDataTable = function (tableElement, url) {
+    $(document).ready(function () {
+        tableElement.DataTable({
+            serverSide: true,
+            ajax: {
+                url,
+                type: 'POST'
+            },
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'goods', name: 'goods' },
+                { data: 'action', name: 'action' }
+            ]
+        });
+    });
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -29,3 +54,6 @@ window.token = document.head.querySelector('meta[name="csrf-token"]').content;
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+
+

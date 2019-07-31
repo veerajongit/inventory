@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Master;
 use Illuminate\Http\Request;
 
 class GoodController extends Controller {
@@ -76,5 +77,11 @@ class GoodController extends Controller {
      */
     public function destroy($id) {
         //
+    }
+
+    public function datatable(Master $master) {
+        return datatables()->of($master->all())->addColumn('action', function ($master) {
+            return '';
+        })->make(true);
     }
 }
